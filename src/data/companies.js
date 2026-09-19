@@ -1,0 +1,1 @@
+export const companies=['Tata Steel','Vedanta','JSW Steel','Larsen & Toubro','Adani Ports','Jindal Steel','Hindalco','NTPC'].map((name,i)=>({id:i+1,name,sector:['Mining','Power & Green Energy','Steel & Aluminium','Construction','Shipping & Logistics'][i%5],alumni:120+i*42,locations:3+i%4,jobs:2+i%5}));

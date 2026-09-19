@@ -1,0 +1,112 @@
+/* Public homepage: warm editorial surfaces, shared portal theme preference. */
+.landing {
+  --home-bg: #faf9f6;
+  --home-ink: #202c30;
+  --home-muted: #606b70;
+  --home-accent: #ba2437;
+  --home-tint: #f1efea;
+  --photo-shade: #10191dcc;
+  --photo-text: #ffffff;
+  background: var(--home-bg);
+  color: var(--home-ink);
+}
+[data-theme=dark] .landing {
+  --home-bg: #111a20;
+  --home-ink: #f0f2ef;
+  --home-muted: #acb8be;
+  --home-accent: #ff8190;
+  --home-tint: #19252d;
+}
+:root { color-scheme: light; }
+:root[data-theme=dark] { color-scheme: dark; }
+.landing .muted, .landing .eyebrow { color: var(--home-muted); }
+.skip-link { position: fixed; top: -100px; left: 20px; z-index: 100; padding: 14px 20px; background: var(--surface); color: var(--text); border-radius: 8px; }
+.skip-link:focus { top: 12px; }
+.landing .announcement-strip { min-height: 36px; font-size: 11px; }
+.landing .public-header { position: sticky; top: 0; height: 88px; padding-inline: max(5%, calc((100% - 1320px) / 2)); background: var(--home-bg); border-bottom: 1px solid var(--border); }
+.landing .public-header nav { gap: 24px; }
+.landing .public-header nav a { font-size: 13px; color: var(--home-muted); }
+.landing .public-header-actions { gap: 18px; }
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 44px; min-height: 44px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 100px; color: var(--home-ink); background: var(--surface); font-size: 12px; }
+.theme-toggle:hover { background: var(--home-tint); }
+.landing .button { border-radius: 8px; }
+.landing .hero { display: grid; grid-template-columns: 1.08fr 1fr; gap: 6%; min-height: 0; max-width: 1480px; margin: auto; padding: 56px 5% 64px; background: var(--home-bg); color: var(--home-ink); overflow: visible; }
+.landing .hero-content { grid-column: 1; grid-row: 1; padding: 24px 0; max-width: none; }
+.landing .hero-eyebrow { color: var(--home-muted); font-size: 10px; letter-spacing: 1.7px; margin-bottom: 26px; }
+.landing .hero h1 { font-size: clamp(52px, 5.6vw, 82px); line-height: 1.06; letter-spacing: -.055em; font-weight: 650; }
+.landing .hero h1>span { color: var(--home-accent); }
+.landing .hero-content>p { font-size: 16px; line-height: 1.8; max-width: 410px; color: var(--home-muted); margin-top: 25px; }
+.landing .hero-actions { gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+.landing .hero-login { color: var(--home-muted); font-size: 11px; }
+.landing .hero-login span { color: var(--home-ink); font-size: 13px; }
+.landing .hero-social { margin-top: 36px; gap: 12px; }
+.landing .hero-social strong { color: var(--home-ink); font-size: 11px; }
+.landing .hero-social>div:not(.avatar-stack)>span { color: var(--home-muted); font-size: 10px; }
+.hero-visual { grid-column: 2; grid-row: 1; min-width: 0; position: relative; border-radius: 16px 16px 80px 16px; overflow: hidden; background: var(--home-tint); }
+.hero-visual>img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: 61% center; }
+.hero-photo-caption { position: absolute; inset: auto 0 0; padding: 65px 28px 32px; color: var(--photo-text); background: linear-gradient(transparent, var(--photo-shade)); font-size: 13px; display: flex; align-items: center; gap: 12px; }
+.landing .hero-location, .landing .hero-side-label { display: none; }
+.landing .stats-band { background: var(--home-tint); padding: 32px max(5%, calc((100% - 1320px) / 2)); border-block: 1px solid var(--border); }
+.landing .stats-band strong { font-size: 36px; font-weight: 650; }
+.landing .stats-band h3 { font-size: 13px; }
+.landing .stats-band p { font-size: 11px; color: var(--home-muted); }
+.landing .partner-band { padding: 36px 7% 40px; background: var(--home-bg); }
+.landing .partner-band>span { font-size: 10px; color: var(--home-muted); }
+.landing .public-section, .landing .india-section { padding: 88px max(5%, calc((100% - 1320px) / 2)); scroll-margin-top: 88px; }
+.landing .section-intro { margin-bottom: 36px; }
+.landing .section-intro h2, .landing .india-copy h2 { font-size: clamp(28px, 3vw, 42px); letter-spacing: -.04em; }
+.landing .section-intro>p, .landing .section-intro>.muted, .landing .india-copy>p { font-size: 14px; color: var(--home-muted); }
+.landing .community-section, .landing .opportunities-section { background: var(--home-tint); }
+.landing .benefit-card { padding: 28px 24px; border-radius: 12px; }
+.landing .benefit-card h3 { font-size: 18px; max-width: 230px; }
+.landing .benefit-card p { font-size: 13px; line-height: 1.8; color: var(--home-muted); }
+.landing .benefit-card .text-link { font-size: 12px; }
+.landing .text-link { font-size: 13px; }
+.landing .state-chips button { font-size: 12px; min-height: 40px; border-radius: 6px; }
+.landing .state-chips button.selected { color: var(--home-accent); }
+.landing .state-summary { font-size: 12px; flex-wrap: wrap; }
+.landing .public-job-card { padding: 28px; border-radius: 12px; }
+.landing .public-job-card h3 { font-size: 21px; }
+.landing .company-name, .landing .job-location, .landing .job-tags>span, .landing .opportunity-note { font-size: 12px; color: var(--home-muted); }
+.landing .public-job-bottom strong { font-size: 15px; }
+.landing .public-event { padding-block: 25px; }
+.landing .public-event h3 { font-size: 19px; }
+.landing .public-event p { font-size: 13px; color: var(--home-muted); }
+.landing .feature-story, .landing .quote-story { border-radius: 12px; overflow: hidden; }
+.landing .public-footer { background: var(--home-bg); }
+.landing .footer-top p, .landing .footer-top a:not(.brand), .landing .footer-top>div>span { font-size: 12px; }
+@media (min-width: 761px) and (max-width: 1100px) {
+  .landing .public-header nav { gap: 14px; }
+  .landing .public-header-actions { gap: 10px; }
+  .theme-toggle span, .landing .login-link { display: none; }
+  .landing .benefit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .landing .public-header { height: 76px; padding: 16px 5%; }
+  .landing .public-header-actions { gap: 8px; }
+  .theme-toggle { padding: 10px; }
+  .theme-toggle span, .landing .public-header-actions>.button, .landing .login-link { display: none; }
+  .landing .public-header nav { top: 76px; background: var(--home-bg); }
+  .landing .public-header nav a { min-height: 44px; display: flex; align-items: center; }
+  .landing .hero { grid-template-columns: 1fr; gap: 28px; padding: 28px 5% 36px; }
+  .landing .hero-content { padding: 10px 0 0; }
+  .landing .hero h1 { font-size: clamp(50px, 10vw, 72px); }
+  .landing .hero-content>p { font-size: 15px; }
+  .landing .hero-visual { grid-column: 1; grid-row: 2; min-height: 300px; border-bottom-right-radius: 56px; }
+  .landing .hero-social { margin-top: 26px; }
+  .landing .stats-band { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 18px; padding: 28px 5%; }
+  .landing .stats-band>div { padding-left: 18px; }
+  .landing .stats-band>div:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .landing .stats-band strong { font-size: 30px; }
+  .landing .public-section, .landing .india-section { padding: 52px 5%; scroll-margin-top: 76px; }
+  .landing .section-intro { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .landing .benefit-grid { grid-template-columns: 1fr; }
+  .landing .benefit-card h3 { max-width: none; }
+  .landing .partner-band>div { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 32px; }
+  .landing .public-job-grid { grid-template-columns: 1fr; }
+  .landing .public-event h3 { font-size: 16px; }
+}
+
+.landing .hero-social .avatar-stack>.avatar { display: inline-flex; margin-top: 0; }
+.landing .hero-content { margin-left: 0; }
+.landing .public-header-actions>.mobile-only { width: 44px; height: 44px; }
