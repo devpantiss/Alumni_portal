@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  MapContainer, TileLayer,
+  MapContainer, TileLayer, GeoJSON, Pane,
   Marker, Tooltip, CircleMarker, useMap, useMapEvents,
 } from 'react-leaflet';
 import { divIcon, latLngBounds } from 'leaflet';
@@ -35,6 +35,26 @@ const TILES = {
     attribution: '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://stamen.com/">Stamen</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   },
 };
+
+function LocalGeography({ onLoad }) {
+  const [geography, setGeography] = useState(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.BASE_URL}countries.geo.json`, { signal: controller.signal })
+      .then(response => {
+        if (!response.ok) throw new Error('Geography unavailable');
+        return response.json();
+      })
+      .then(data => { setGeography(data); onLoad(true); })
+      .catch(() => {});
+    return () => controller.abort();
+  }, [onLoad]);
+  return geography ? (
+    <Pane name="local-geography" style={{ zIndex: 150 }}>
+      <GeoJSON data={geography} interactive={false} style={{ className: 'map-local-geography', weight: 1, fillOpacity: 1 }} />
+    </Pane>
+  ) : null;
+}
 
 /* ─── Map behaviour hook ─────────────────────────────────────────── */
 function MapBehavior({ selected, resetVersion, onReady }) {
@@ -89,7 +109,8 @@ function makePinIcon(color, shadow, active) {
 function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
   const map  = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
-  useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
+  const mapEvents = useMemo(() => ({ zoomend: () => setZoom(map.getZoom()) }), [map]);
+  useMapEvents(mapEvents);
 
   const groups = useMemo(() => Object.values(
     people.reduce((acc, p) => { (acc[p.state] ??= []).push(p); return acc; }, {})
@@ -178,6 +199,7 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
   const [tileOverride, setOverride] = useState(null); // manual override; null = follow theme
   const [fsError, setFsError]       = useState('');
   const [tileError, setTileError]   = useState(false);
+  const [geographyReady, setGeographyReady] = useState(false);
   const [showTileMenu, setTileMenu] = useState(false);
   const onReady = useCallback(m => setMap(m), []);
 
@@ -206,10 +228,11 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
         zoomControl={false}
         scrollWheelZoom
         keyboard
-        attributionControl={false}
+        attributionControl
         className="alumni-leaflet-map"
       >
         <MapBehavior selected={selected} resetVersion={resetVersion} onReady={onReady} />
+        <LocalGeography onLoad={setGeographyReady} />
 
         <TileLayer
           key={tileKey}
@@ -288,7 +311,7 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
 
       <div className="map-interaction-note">
         {fsError || (tileError
-          ? 'Map tiles unavailable · Showing local geography'
+          ? `Map tiles unavailable · ${geographyReady ? 'Showing local geography' : 'Showing alumni locations'}`
           : 'Drag to pan · Scroll to zoom · Demo locations')}
       </div>
     </div>

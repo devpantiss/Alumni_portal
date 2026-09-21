@@ -24,7 +24,7 @@ Admin sign-in and `/admin` open `/admin/connect`. The analytics overview is at `
 
 ## Map
 
-The admin map uses React Leaflet and Leaflet with a dark-styled OpenStreetMap tile layer. No API key is required. It supports native drag/touch panning, scroll and double-click zoom, keyboard navigation, clickable state clusters, alumni markers, tooltips, heatmap-style concentration circles, fullscreen, and recentering. Selecting a list entry flies to its marker and opens its profile. Tiles require internet access; local GeoJSON geography remains underneath if tiles are unavailable. OpenStreetMap attribution is visible on the map. Production deployments should configure an appropriate tile service for their traffic.
+The admin map uses React Leaflet and Leaflet with theme-aware Stadia Maps tile layers. It supports native drag/touch panning, scroll and double-click zoom, keyboard navigation, clickable state clusters, alumni markers, tooltips, heatmap-style concentration circles, fullscreen, and recentering. Selecting a list entry flies to its marker and opens its profile. Tiles require internet access; local GeoJSON geography remains underneath if tiles are unavailable. Provider and OpenStreetMap attribution are visible on the map. Production deployments should configure tile-provider access for their domain and traffic.
 
 The previous Google Maps implementation has been replaced. `VITE_GOOGLE_MAPS_API_KEY` is no longer used.
 
@@ -55,4 +55,4 @@ External imagery is served by Unsplash and fonts by Google Fonts. These need int
 
 ## Verification
 
-`npm test` runs data/filter checks. With the dev server running at port 5174, `node tests/map-browser.mjs` tests the default admin route, map panning/zoom, selection, cluster interaction, call simulation, and mobile layout using installed Chrome. Override the URL through `BASE_URL` when using another port.
+`npm test` runs data/filter checks, including boolean false filters. `node tests/home-browser.mjs` checks responsive layouts, navigation, and theme persistence. `node tests/routes-browser.mjs` checks admin and alumni routes for rendering and runtime errors. With the dev server running at port 5174, `node tests/map-browser.mjs` tests the default admin route, offline geography, attribution, map panning/zoom, selection, cluster interaction, call simulation, and mobile layout using installed Chrome. Override the URL through `BASE_URL` when using another port.

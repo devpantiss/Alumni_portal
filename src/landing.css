@@ -1175,13 +1175,16 @@
   .landing .section-intro { flex-direction: column; align-items: flex-start; gap: 20px; }
   .landing .benefit-grid { grid-template-columns: 1fr; }
   .landing .india-section { grid-template-columns: 1fr; gap: 40px; }
-  .landing .partner-band > div { flex-wrap: wrap; justify-content: center; gap: 24px 32px; }
+  .landing .partner-band > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px 32px; }
   .landing .public-job-grid { grid-template-columns: 1fr; }
   .landing .stories-grid { grid-template-columns: 1fr; }
   .landing .public-events { display: flex; flex-direction: column; border-left: none; border-top: 3px solid var(--ind-orange); }
   .landing .public-event { border-right: 0; }
   .landing .public-event h3 { font-size: 15px; }
   .landing .join-banner { flex-direction: column; gap: 36px; }
+  .landing .join-banner > div:not(.join-pattern) { min-width: 0; max-width: 100%; }
+  .landing .join-banner .button { white-space: normal; max-width: 100%; }
+  .landing .join-banner .button svg { flex-shrink: 0; }
   .landing .join-banner::before { width: 100%; height: 4px; left: 0; top: 0; }
   .landing .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
 }
@@ -1408,4 +1411,3 @@
   .ind-status-row { flex-wrap: wrap; gap: 10px; }
   .ind-ticker { display: none; }
 }
-

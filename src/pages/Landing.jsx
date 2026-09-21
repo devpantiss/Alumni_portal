@@ -191,7 +191,7 @@ export default function Landing() {
             {[
               [Users,           'Familiar faces. New connections.', 'Find your batchmates, reconnect with your training center, and make new connections across industries.', 'Find your community',  'connect'],
               [BriefcaseBusiness,'Your next opportunity is here.',   'Discover roles that value your skills, get referrals from fellow alumni, and take the next step in your career.', 'Explore opportunities', 'jobs'],
-              [Handshake,       'Experience worth sharing.',        'Learn from people who've walked your path. Find a mentor, share your knowledge, or give someone a head start.', 'Meet the mentors',     'mentorship'],
+              [Handshake,       'Experience worth sharing.',        "Learn from people who've walked your path. Find a mentor, share your knowledge, or give someone a head start.", 'Meet the mentors',     'mentorship'],
               [MapPin,          'A network, wherever you go.',      'From your hometown to your next worksite. Find Pantiss professionals near you and feel at home, anywhere.', 'Explore the network',  'directory'],
             ].map(([Icon, title, text, cta, next], i) => (
               <Link to={`/login/alumni?next=${next}`} className="benefit-card" key={title}>
@@ -243,7 +243,7 @@ export default function Landing() {
               <div className="eyebrow"><span/>SKILLS MEET OPPORTUNITY</div>
               <h2>A new chapter<br/>in your career.</h2>
             </div>
-            <Link to="/login/alumni?next=jobs" className="text-link">Explore all opportunities <ArrowUpRight size={18}/></Link>
+            <a href="https://job-search-client-ten.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-link">Explore all opportunities <ArrowUpRight size={18}/></a>
           </div>
           <div className="public-job-grid">
             {jobs.slice(0, 3).map(job => (
