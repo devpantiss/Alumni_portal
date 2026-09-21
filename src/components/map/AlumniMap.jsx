@@ -12,27 +12,37 @@ import 'leaflet/dist/leaflet.css';
 const INDIA = [[8.4, 68.7], [35.5, 97.25]];
 const CENTER = [22.5, 82.5];
 const point = p => [p.lat, p.lng];
-const noMotion = () => window.Media('(prefers-reduced-motion: reduce)').matches;
+const noMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ─── Tile catalogue ─────────────────────────────────────────────── */
+// OpenStreetMap tiles — 100% free, no API key required, no registration
+const OSM_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const OSM_URL  = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 const TILES = {
-  /* dark theme */
+  /* dark theme — OSM + CSS dark-filter (no key) */
   dark: {
-    url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+    url: OSM_URL,
     label: 'Dark',
-    attribution: '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: OSM_ATTR,
+    subdomains: 'abc',
+    className: 'dark-basemap-tiles',
   },
-  /* light theme */
+  /* light theme — plain OSM (no key) */
   light: {
-    url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+    url: OSM_URL,
     label: 'Light',
-    attribution: '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: OSM_ATTR,
+    subdomains: 'abc',
+    className: '',
   },
-  /* extra: toner style (neutral, works in both) */
+  /* extra: same OSM with a slight grey tone */
   toner: {
-    url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png',
-    label: 'Toner',
-    attribution: '&copy; <a href="https://stadiamaps.com/attribution/">Stadia Maps</a> &copy; <a href="https://stamen.com/">Stamen</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    url: OSM_URL,
+    label: 'Street',
+    attribution: OSM_ATTR,
+    subdomains: 'abc',
+    className: '',
   },
 };
 
@@ -238,6 +248,8 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
           key={tileKey}
           url={tile.url}
           attribution={tile.attribution}
+          subdomains={tile.subdomains ?? 'abc'}
+          className={tile.className ?? ''}
           maxZoom={20}
           eventHandlers={{
             tileerror: () => setTileError(true),
