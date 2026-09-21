@@ -9,10 +9,10 @@ import { useApp } from '../../context/AppContext';
 import 'leaflet/dist/leaflet.css';
 
 /* ─── Constants ─────────────────────────────────────────────────── */
-const INDIA  = [[8.4, 68.7], [35.5, 97.25]];
+const INDIA = [[8.4, 68.7], [35.5, 97.25]];
 const CENTER = [22.5, 82.5];
-const point    = p => [p.lat, p.lng];
-const noMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const point = p => [p.lat, p.lng];
+const noMotion = () => window.Media('(prefers-reduced-motion: reduce)').matches;
 
 /* ─── Tile catalogue ─────────────────────────────────────────────── */
 const TILES = {
@@ -46,7 +46,7 @@ function LocalGeography({ onLoad }) {
         return response.json();
       })
       .then(data => { setGeography(data); onLoad(true); })
-      .catch(() => {});
+      .catch(() => { });
     return () => controller.abort();
   }, [onLoad]);
   return geography ? (
@@ -70,7 +70,7 @@ function MapBehavior({ selected, resetVersion, onReady }) {
   }, [map, resetVersion]);
   useEffect(() => {
     if (!selected) return;
-    const zoom   = Math.max(8, map.getZoom());
+    const zoom = Math.max(8, map.getZoom());
     const offset = map.getSize().x > 620 ? 130 : 0;
     const center = map.unproject(map.project(point(selected), zoom).add([offset, 0]), zoom);
     map.flyTo(center, zoom, { animate: !noMotion(), duration: 0.65 });
@@ -80,7 +80,7 @@ function MapBehavior({ selected, resetVersion, onReady }) {
 
 /* ─── SVG pin builder ────────────────────────────────────────────── */
 function makePinIcon(color, shadow, active) {
-  const size   = active ? 40 : 32;
+  const size = active ? 40 : 32;
   const anchor = [size / 2, size];
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 32 38">
@@ -99,15 +99,15 @@ function makePinIcon(color, shadow, active) {
   return divIcon({
     className: active ? 'map-pin-active' : 'map-pin-idle',
     html: svg,
-    iconSize:    [size, size],
-    iconAnchor:  anchor,
+    iconSize: [size, size],
+    iconAnchor: anchor,
     popupAnchor: [0, -size],
   });
 }
 
 /* ─── Markers ────────────────────────────────────────────────────── */
 function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
-  const map  = useMap();
+  const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
   const mapEvents = useMemo(() => ({ zoomend: () => setZoom(map.getZoom()) }), [map]);
   useMapEvents(mapEvents);
@@ -117,12 +117,12 @@ function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
   ), [people]);
 
   const clusterMode = zoom < 6 && !selected && !heatmap;
-  const clusterCls  = isDark ? 'alumni-cluster-dark' : 'alumni-cluster-light';
-  const tooltipCls  = isDark ? 'map-tooltip-dark'    : 'map-tooltip-light';
+  const clusterCls = isDark ? 'alumni-cluster-dark' : 'alumni-cluster-light';
+  const tooltipCls = isDark ? 'map-tooltip-dark' : 'map-tooltip-light';
 
   if (clusterMode) return groups.map(group => {
     const center = latLngBounds(group.map(point)).getCenter();
-    const icon   = divIcon({
+    const icon = divIcon({
       className: clusterCls,
       html: `<span>${group.length}</span>`,
       iconSize: [44, 44], iconAnchor: [22, 22],
@@ -136,7 +136,7 @@ function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
         eventHandlers={{ click: () => map.fitBounds(group.map(point), { padding: [65, 65], maxZoom: 9, animate: !noMotion() }) }}
       >
         <Tooltip direction="top" className={tooltipCls}>
-          <strong>{group.length} alumni</strong> · {group[0].state}<br/>Click to explore
+          <strong>{group.length} alumni</strong> · {group[0].state}<br />Click to explore
         </Tooltip>
       </Marker>
     );
@@ -151,10 +151,10 @@ function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
         center={point(person)}
         radius={active ? 32 : 22}
         pathOptions={{
-          color:       '#df293b',
-          stroke:      active,
-          weight:      2,
-          fillColor:   '#df293b',
+          color: '#df293b',
+          stroke: active,
+          weight: 2,
+          fillColor: '#df293b',
           fillOpacity: active ? 0.35 : 0.18,
         }}
         eventHandlers={{ click: () => onSelect(person) }}
@@ -164,12 +164,12 @@ function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
     );
 
     // pick pin colour by status
-    const pinColor  = active          ? '#df293b'
-                    : person.online   ? '#16a34a'
-                    :                   '#2563eb';
-    const pinShadow = active          ? '#dc2626'
-                    : person.online   ? '#15803d'
-                    :                   '#1d4ed8';
+    const pinColor = active ? '#df293b'
+      : person.online ? '#16a34a'
+        : '#2563eb';
+    const pinShadow = active ? '#dc2626'
+      : person.online ? '#15803d'
+        : '#1d4ed8';
     const icon = makePinIcon(pinColor, pinShadow, active);
 
     return (
@@ -181,7 +181,7 @@ function AlumniMarkers({ people, selected, onSelect, heatmap, isDark }) {
         eventHandlers={{ click: () => onSelect(person) }}
       >
         <Tooltip direction="top" offset={[0, -(active ? 38 : 32)]} className={tooltipCls}>
-          <strong>{person.name}</strong><br/>{person.role}<br/>{person.city}, {person.state}
+          <strong>{person.name}</strong><br />{person.role}<br />{person.city}, {person.state}
         </Tooltip>
       </Marker>
     );
@@ -194,11 +194,11 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
   const isDark = theme === 'dark';
 
   const wrapper = useRef(null);
-  const [map, setMap]               = useState(null);
-  const [resetVersion, setReset]    = useState(0);
+  const [map, setMap] = useState(null);
+  const [resetVersion, setReset] = useState(0);
   const [tileOverride, setOverride] = useState(null); // manual override; null = follow theme
-  const [fsError, setFsError]       = useState('');
-  const [tileError, setTileError]   = useState(false);
+  const [fsError, setFsError] = useState('');
+  const [tileError, setTileError] = useState(false);
   const [geographyReady, setGeographyReady] = useState(false);
   const [showTileMenu, setTileMenu] = useState(false);
   const onReady = useCallback(m => setMap(m), []);
@@ -206,9 +206,9 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
   /* Reset manual override whenever the global theme flips */
   useEffect(() => { setOverride(null); }, [theme]);
 
-  const tileKey  = tileOverride ?? (isDark ? 'dark' : 'light');
-  const tile     = TILES[tileKey];
-  const wrapCls  = `map-canvas ${isDark ? 'alumni-dark-map' : 'alumni-light-map'}`;
+  const tileKey = tileOverride ?? (isDark ? 'dark' : 'light');
+  const tile = TILES[tileKey];
+  const wrapCls = `map-canvas ${isDark ? 'alumni-dark-map' : 'alumni-light-map'}`;
 
   async function toggleFullscreen() {
     try {
@@ -241,7 +241,7 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
           maxZoom={20}
           eventHandlers={{
             tileerror: () => setTileError(true),
-            tileload:  () => setTileError(false),
+            tileload: () => setTileError(false),
           }}
         />
 
@@ -296,16 +296,16 @@ function AlumniMap({ people, selected, onSelect, heatmap = false }) {
 
       {/* Zoom / pan controls */}
       <div className="map-controls">
-        <button aria-label="Zoom in"      onClick={() => map?.zoomIn()}>  <Plus      size={17} /></button>
-        <button aria-label="Zoom out"     onClick={() => map?.zoomOut()}> <Minus     size={17} /></button>
+        <button aria-label="Zoom in" onClick={() => map?.zoomIn()}>  <Plus size={17} /></button>
+        <button aria-label="Zoom out" onClick={() => map?.zoomOut()}> <Minus size={17} /></button>
         <button aria-label="Recenter map" onClick={() => { onSelect(null); setReset(v => v + 1); }}><LocateFixed size={17} /></button>
-        <button aria-label="Fullscreen"   onClick={toggleFullscreen}>     <Maximize2 size={16} /></button>
+        <button aria-label="Fullscreen" onClick={toggleFullscreen}>     <Maximize2 size={16} /></button>
       </div>
 
       {/* Legend */}
       <div className="map-legend">
-        <span><i className="map-dot online"   />Online</span>
-        <span><i className="map-dot offline"  />Offline</span>
+        <span><i className="map-dot online" />Online</span>
+        <span><i className="map-dot offline" />Offline</span>
         <span><i className="map-dot selected" />Selected</span>
       </div>
 
