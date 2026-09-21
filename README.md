@@ -30,7 +30,8 @@ The previous Google Maps implementation has been replaced. `VITE_GOOGLE_MAPS_API
 
 ## Routes
 
-- Public: `/`, `/login`, `/login/alumni`, `/login/admin`.
+- Public: `/`, `/campusfeed`, `/campusfeed/:id`, `/events`, `/events/:id`, `/galleries`, `/members`, `/search`, `/map`, `/jobs`, `/jobs?tab=e_internships`, `/about`, `/contact`, `/platform/invitation`, `/addon/1534`. Navigation follows alumni.dfindia.org while retaining Pantiss content and the existing industrial design. Public pages support both themes; invitations copy a shareable link, and member actions lead to login.
+- Login: `/login`, `/login/alumni`, `/login/admin`.
 - Alumni: `/alumni`, `/alumni/profile`, `/alumni/profile/:id`, `/alumni/batch`, `/alumni/directory`, `/alumni/connect`, `/alumni/messages`, `/alumni/calls`, `/alumni/jobs`, `/alumni/jobs/:id`, `/alumni/events`, `/alumni/events/:id`, `/alumni/groups`, `/alumni/groups/:id`, `/alumni/mentorship`, `/alumni/announcements`, `/alumni/resources`, `/alumni/settings`.
 - Admin: `/admin` (redirect), `/admin/connect`, `/admin/overview`, `/admin/alumni`, `/admin/alumni/:id`, `/admin/verification`, `/admin/batches`, `/admin/programs`, `/admin/campuses`, `/admin/job-roles`, `/admin/companies`, `/admin/companies/:id`, `/admin/jobs`, `/admin/jobs/:id`, `/admin/events`, `/admin/events/:id`, `/admin/announcements`, `/admin/groups`, `/admin/groups/:id`, `/admin/mentorship`, `/admin/messages`, `/admin/reports`, `/admin/notifications`, `/admin/settings`.
 
@@ -55,4 +56,4 @@ External imagery is served by Unsplash and fonts by Google Fonts. These need int
 
 ## Verification
 
-`npm test` runs data/filter checks, including boolean false filters. `node tests/home-browser.mjs` checks responsive layouts, navigation, and theme persistence. `node tests/routes-browser.mjs` checks admin and alumni routes for rendering and runtime errors. With the dev server running at port 5174, `node tests/map-browser.mjs` tests the default admin route, offline geography, attribution, map panning/zoom, selection, cluster interaction, call simulation, and mobile layout using installed Chrome. Override the URL through `BASE_URL` when using another port.
+`node tests/public-browser.mjs` checks public routes at four viewport widths, dropdown keyboard behavior, directory and gallery filters, invitation copying, and theme persistence. `npm test` runs data/filter checks, including boolean false filters. `node tests/home-browser.mjs` checks responsive layouts, navigation, and theme persistence. `node tests/routes-browser.mjs` checks admin and alumni routes for rendering and runtime errors. With the dev server running at port 5174, `node tests/map-browser.mjs` tests the default admin route, offline geography, attribution, map panning/zoom, selection, cluster interaction, call simulation, and mobile layout using installed Chrome. Override the URL through `BASE_URL` when using another port.

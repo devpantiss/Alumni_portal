@@ -17,9 +17,11 @@ try {
     if (await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)) throw Error(`Overflow at ${width}: ${await page.evaluate(() => [...document.querySelectorAll('body *')].filter(el => el.getBoundingClientRect().right > innerWidth + 1).map(el => el.className).slice(0, 25).join(', '))}`);
   }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole('button', { name: 'Toggle navigation' }).click();
-  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Our community' }).click();
-  if (await page.getByRole('button', { name: 'Toggle navigation' }).getAttribute('aria-expanded') !== 'false') throw Error('Menu did not close');
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'News & Stories' }).click();
+  if (await page.getByRole('button', { name: 'Open navigation' }).getAttribute('aria-expanded') !== 'false') throw Error('Menu did not close');
+  await page.goto(process.env.BASE_URL || 'http://localhost:5174');
+  await page.locator('.hero').waitFor();
   await page.getByRole('button', { name: 'Switch to light theme' }).click();
   await page.reload();
   await page.getByRole('button', { name: 'Switch to dark theme' }).waitFor();

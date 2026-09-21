@@ -1,65 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Users, BriefcaseBusiness, MapPin, Handshake, ShieldCheck, Network, Menu, X, Linkedin, Mail, Instagram, HardHat, Wrench, Zap, Truck } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Users, BriefcaseBusiness, MapPin, Handshake, ShieldCheck, Network, HardHat, Wrench, Zap, Truck } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Logo, Avatar, Badge, Modal } from '../components/common/UI';
-import ThemeToggle from '../components/common/ThemeToggle';
-import '../landing.css';
+import { Avatar, Badge } from '../components/common/UI';
+import PublicLayout from '../components/layout/PublicLayout';
 import { alumni } from '../data/alumni';
 import { jobs } from '../data/jobs';
 import { events } from '../data/events';
 
 const hero = 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2200&q=90';
 
-/* ── Ticker items ── */
-const TICKER = ['HEMM OPERATORS','ELECTRICAL TECHNICIANS','WELDERS','RIGGERS','INSTRUMENTATION','MINING ENGINEERS','CRANE OPERATORS','FITTERS','BOILERMAKERS','ITI ALUMNI'];
-
 export default function Landing() {
-  const [menu, setMenu] = useState(false);
-  const [policy, setPolicy] = useState(null);
   const [state, setState] = useState('Odisha');
 
   return (
-    <div className="landing">
-      <a className="skip-link" href="#main-content">Skip to content</a>
-
-      {/* ── Announcement strip ── */}
-      <div className="announcement-strip">
-        <span>⚙ A community built on skill. A future built together.</span>
-        <Link to="/login/alumni">Find your people <ArrowUpRight size={13}/></Link>
-      </div>
-
-      {/* ── Ticker / marquee ── */}
-      <div className="ind-ticker" aria-hidden="true">
-        <div className="ind-ticker-track">
-          {[...TICKER, ...TICKER].map((item, i) => (
-            <span key={i} className="ind-ticker-item">
-              <span className="ind-ticker-dot"/>
-              {item}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Header ── */}
-      <header className="public-header">
-        <Logo/>
-        <nav id="public-navigation" aria-label="Main navigation" className={menu ? 'open' : ''}>
-          <a href="#community" onClick={() => setMenu(false)}>Our community</a>
-          <a href="#opportunities" onClick={() => setMenu(false)}>Opportunities</a>
-          <a href="#stories" onClick={() => setMenu(false)}>Alumni stories</a>
-          <a href="#events" onClick={() => setMenu(false)}>Events</a>
-        </nav>
-        <div className="public-header-actions">
-          <ThemeToggle/>
-          <Link className="login-link" to="/login">Log in <ArrowUpRight size={15}/></Link>
-          <Link className="button primary" to="/login/alumni">Join the network <ArrowRight size={16}/></Link>
-          <button className="icon-button mobile-only" aria-label="Toggle navigation" aria-expanded={menu} aria-controls="public-navigation" onClick={() => setMenu(!menu)}>
-            {menu ? <X/> : <Menu/>}
-          </button>
-        </div>
-      </header>
-
+    <PublicLayout>
       <main id="main-content">
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="hero">
@@ -278,7 +233,7 @@ export default function Landing() {
               <div className="eyebrow"><span/>REAL PEOPLE. REAL PROGRESS.</div>
               <h2>Started here.<br/>Going places.</h2>
             </div>
-            <span className="muted">Every skill has a story.<br/>These are a few of ours.</span>
+            <Link className="text-link" to="/campusfeed">News &amp; stories <ArrowUpRight size={18}/></Link>
           </div>
           <div className="stories-grid">
             <article className="feature-story">
@@ -317,11 +272,11 @@ export default function Landing() {
               <div className="eyebrow"><span/>LET'S MAKE NEW MEMORIES</div>
               <h2>Good things<br/>happen together.</h2>
             </div>
-            <Link className="text-link" to="/login/alumni?next=events">View all events <ArrowUpRight size={18}/></Link>
+            <Link className="text-link" to="/events">View all events <ArrowUpRight size={18}/></Link>
           </div>
           <div className="public-events">
             {events.map(e => (
-              <Link to={`/login/alumni?next=events/${e.id}`} className="public-event" key={e.id}>
+              <Link to={`/events/${e.id}`} className="public-event" key={e.id}>
                 <div className="event-date">
                   <strong>{e.date}</strong>
                   <span>{e.month} 2026</span>
@@ -354,57 +309,7 @@ export default function Landing() {
         </section>
       </main>
 
-      {/* ═══════════════ FOOTER ═══════════════ */}
-      <footer className="public-footer">
-        <div className="footer-top">
-          <div>
-            <Logo/>
-            <p>Building careers. Connecting people.<br/>Strengthening India's skilled workforce.</p>
-            <div className="social-links">
-              <a aria-label="Contact Pantiss" href="mailto:alumni@pantiss.com"><Mail size={18}/></a>
-              <button aria-label="LinkedIn community information" onClick={() => setPolicy('Social community')}><Linkedin size={18}/></button>
-              <button aria-label="Instagram community information" onClick={() => setPolicy('Social community')}><Instagram size={18}/></button>
-            </div>
-          </div>
-          <div>
-            <h4>The network</h4>
-            <a href="#community">Our community</a>
-            <a href="#stories">Alumni stories</a>
-            <Link to="/login/alumni?next=directory">Alumni directory</Link>
-          </div>
-          <div>
-            <h4>Move forward</h4>
-            <a href="#opportunities">Career opportunities</a>
-            <Link to="/login/alumni?next=mentorship">Find a mentor</Link>
-            <a href="#events">Events &amp; reunions</a>
-          </div>
-          <div>
-            <h4>Let's connect</h4>
-            <a href="mailto:alumni@pantiss.com">alumni@pantiss.com <ArrowUpRight size={13}/></a>
-            <span>Bhubaneswar, Odisha, India</span>
-            <Link to="/login/admin">Administrator login <ArrowUpRight size={13}/></Link>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <span>© 2026 Pantiss Skill Universe. All rights reserved.</span>
-          <span>
-            <button onClick={() => setPolicy('Privacy policy')}>Privacy policy</button>
-            <button onClick={() => setPolicy('Terms of use')}>Terms of use</button>
-            <span>Made for the people who build.</span>
-          </span>
-        </div>
-      </footer>
-
-      {policy && (
-        <Modal title={policy} onClose={() => setPolicy(null)}>
-          <div className="modal-body">
-            <p>This is a frontend demonstration of the Pantiss Alumni Network. All professional profiles and geographic locations are fictional. Demo activity is stored only in this browser.</p>
-            <p>No real messages, calls, applications, or registrations are sent. Please use the demo credentials and avoid entering sensitive personal information.</p>
-            <p>Contact: <a href="mailto:alumni@pantiss.com">alumni@pantiss.com</a></p>
-          </div>
-        </Modal>
-      )}
-    </div>
+    </PublicLayout>
   );
 }
 
